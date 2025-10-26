@@ -1,0 +1,30 @@
+name: Daily Automated Commit
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Step with email 23f3003311@ds.study.iitm.ac.in
+        run: |
+          echo "Automated commit for 23f3003311@ds.study.iitm.ac.in"
+          date > automated_commit.txt
+          echo "Email: 23f3003311@ds.study.iitm.ac.in" >> automated_commit.txt
+          
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "23f3003311@ds.study.iitm.ac.in"
+          git config --local user.name "GitHub Actions Bot"
+          git add automated_commit.txt
+          git commit -m "Daily automated commit [skip ci]" || exit 0
+          git push
